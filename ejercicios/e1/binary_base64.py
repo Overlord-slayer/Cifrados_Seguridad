@@ -1,6 +1,30 @@
 from const import BASE64_CHARS
 
 def binary_to_base64(binary):
+    """
+    Convierte una cadena binaria a su representación en formato BASE64.
+
+    Esta función toma una cadena binaria, la divide en grupos de 6 bits y convierte cada grupo
+    en su carácter BASE64 correspondiente. Si la longitud del binario no es múltiplo de 6,
+    se rellena con ceros. Además, se añade relleno '=' al final si es necesario para que la
+    longitud de la cadena BASE64 sea múltiplo de 4.
+
+    Parámetros:
+    -----------
+    binary : str
+        La cadena binaria que se desea convertir a formato BASE64.
+
+    Retorna:
+    --------
+    str
+        Una cadena en formato BASE64 que representa la conversión de la cadena binaria.
+
+    Ejemplo:
+    --------
+    >>> binario = "01001000011011110110110001100001"
+    >>> binary_to_base64(binario)
+    'SG9sYQ=='
+    """
     # Asegurarse de que la longitud del binario sea múltiplo de 6
     padding = len(binary) % 6
     if padding != 0:
