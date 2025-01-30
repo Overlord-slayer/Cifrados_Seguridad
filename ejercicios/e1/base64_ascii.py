@@ -1,5 +1,5 @@
 from base64_binary import base64_to_binary
-from binay_ascii import binary_to_ascii
+from binary_ascii import binary_to_ascii
 
 def base64_to_ascii(text):
     """

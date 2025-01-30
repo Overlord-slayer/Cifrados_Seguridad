@@ -39,4 +39,11 @@ def cifrar_ascii(texto, llave):
 # Ejemplo de uso
 texto = "Hola"
 llave = "abcd"
+texto_cifrado = cifrar_ascii(texto, llave)
 print(cifrar_ascii(texto, llave))  # Salida: un texto cifrado
+
+
+
+# Descifrar
+texto_original = cifrar_ascii(texto_cifrado, llave)
+print("Texto original:", texto_original)  # Salida: HolaMundo

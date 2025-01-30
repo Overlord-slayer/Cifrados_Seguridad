@@ -37,6 +37,6 @@ def xor_binary(binary1, binary2):
     return result
 
 # Ejemplo de uso
-binario1 = "10101010"
-binario2 = "11001100"
+binario1 = "01010101"
+binario2 = "11011100"
 print(xor_binary(binario1, binario2))  # Salida: 01100110
