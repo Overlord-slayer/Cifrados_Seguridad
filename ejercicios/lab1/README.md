@@ -24,3 +24,6 @@ source <nombre_entorno>/bin/activate
 ```
 En este caso, se modularizo el codigo para tener independecia en cada codigo, asi mismo, para la parte de frecuencia, se opto por jupyter lab,
 por ello hay un .ipynb. Pero igualmente esta el .py.
+
+# Consideraciones
+En este caso, para poder probar cada uno de los algoritmos, ingresar al archivo especifico, no hay un main.py global que implemente cada uno.
