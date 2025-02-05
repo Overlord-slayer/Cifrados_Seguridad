@@ -22,3 +22,6 @@
 
 # Inciso 5, custom_xor.py
 ![image](https://github.com/user-attachments/assets/cbe97a23-d096-443f-b54f-df236a573c33)
+
+
+##### https://chatgpt.com/share/67a2d31b-8fcc-8001-9d70-3edb6494cf5b
