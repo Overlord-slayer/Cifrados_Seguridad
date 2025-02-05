@@ -27,3 +27,17 @@ por ello hay un .ipynb. Pero igualmente esta el .py.
 
 # Consideraciones
 En este caso, para poder probar cada uno de los algoritmos, ingresar al archivo especifico, no hay un main.py global que implemente cada uno.
+
+# Ejemplo
+## Vigenere
+![image](https://github.com/user-attachments/assets/f8e16998-6ae1-4bd9-a16f-67c5598e7612)
+
+## Cesar
+![image](https://github.com/user-attachments/assets/d95f2166-e4c6-402c-af6f-b182b290a5b8)
+
+## Afin
+![image](https://github.com/user-attachments/assets/0810636e-b015-467d-9b47-12b1b4f9e411)
+
+## Frecuencia de palabras
+Este se recomiendo revisar el jupyter notebook -> **frecuencia_chars_graph.ipynb**
+
