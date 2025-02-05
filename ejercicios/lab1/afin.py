@@ -1,122 +1,103 @@
+"""_summary_
+    Este documento sirve para poder hacer la version del cifrado afin.
+    Este fue mucho mas complicado que los otros, al menos, para la obtencion de informacion
+    con su implementacion
+    
+    Raises:
+        ValueError: _description_
+        ValueError: _description_
+
+    Returns:
+        _type_: _description_
+
+    @see https://chatgpt.com/share/67a2ba41-867c-800a-a69d-46a1560c94bc
+"""
+
 from clean_string import clean_string
+import math
 
 def gcd(a: int, b: int) -> int:
     """
-    Calcula el máximo común divisor (GCD) de dos números.
-
-    Args:
-        a (int): Primer número.
-        b (int): Segundo número.
-
-    Returns:
-        int: El máximo común divisor de a y b.
+    Calcula el máximo común divisor (MCD) usando el algoritmo de Euclides.
+    
+    :param a: Primer número entero.
+    :param b: Segundo número entero.
+    :return: El máximo común divisor de a y b.
     """
-    while b != 0:
+    while b:
         a, b = b, a % b
     return a
 
-
 def mod_inverse(a: int, m: int) -> int:
     """
-    Calcula el inverso modular de a módulo m.
-
-    Args:
-        a (int): Número del cual se calculará el inverso.
-        m (int): Módulo.
-
-    Returns:
-        int: El inverso modular de a módulo m.
+    Calcula el inverso multiplicativo de a módulo m usando el algoritmo de Euclides extendido.
+    
+    :param a: Número entero para encontrar su inverso multiplicativo.
+    :param m: Módulo.
+    :return: El inverso multiplicativo de a módulo m, o None si no existe.
     """
-    if gcd(a, m) != 1:
-        raise ValueError("a y m deben ser coprimos (GCD = 1).")
-    
-    # Algoritmo extendido de Euclides para encontrar el inverso modular
-    x, y, u, v = 0, 1, 1, 0
-    while a != 0:
-        q, r = m // a, m % a
-        m, a = a, r
-        x, y, u, v = u, v, x - q * u, y - q * v
-    
-    return x % m
+    for i in range(1, m):
+        if (a * i) % m == 1:
+            return i
+    return None
 
-
-def affine_encrypt(plaintext: str, a: int, b: int) -> str:
+def affine_encrypt(text: str, a: int, b: int) -> str:
     """
     Cifra un texto usando el cifrado afín.
-
-    Args:
-        plaintext (str): Texto plano a cifrar.
-        a (int): Clave a (debe ser coprimo con 26).
-        b (int): Clave b.
-
-    Returns:
-        str: Texto cifrado.
+    
+    :param text: Texto de entrada a cifrar.
+    :param a: Clave de multiplicación (debe ser coprimo con 26).
+    :param b: Clave de desplazamiento.
+    :return: Texto cifrado.
+    :raises ValueError: Si a no es coprimo con 26.
     """
     if gcd(a, 26) != 1:
-        raise ValueError("a y 26 deben ser coprimos (GCD = 1).")
+        raise ValueError("a debe ser coprimo con 26.")
     
-    ciphertext = ""
-    for char in plaintext:
-        if char.islower():
-            # Cifrar letras minúsculas
-            P = ord(char) - ord('a')
-            C = (a * P + b) % 26
-            ciphertext += chr(C + ord('a'))
-        elif char.isupper():
-            # Cifrar letras mayúsculas
-            P = ord(char) - ord('A')
-            C = (a * P + b) % 26
-            ciphertext += chr(C + ord('A'))
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            x = ord(char.lower()) - ord('a')
+            encrypted_char = (a * x + b) % 26
+            encrypted_text += chr(encrypted_char + ord('a'))
         else:
-            # Mantener otros caracteres sin cambios
-            ciphertext += char
-    return ciphertext
+            encrypted_text += char  # Mantiene espacios y otros caracteres sin cifrar
+    return encrypted_text
 
-
-def affine_decrypt(ciphertext: str, a: int, b: int) -> str:
+def affine_decrypt(text: str, a: int, b: int) -> str:
     """
-    Descifra un texto cifrado usando el cifrado afín.
-
-    Args:
-        ciphertext (str): Texto cifrado.
-        a (int): Clave a (debe ser coprimo con 26).
-        b (int): Clave b.
-
-    Returns:
-        str: Texto plano descifrado.
-    """
-    if gcd(a, 26) != 1:
-        raise ValueError("a y 26 deben ser coprimos (GCD = 1).")
+    Descifra un texto cifrado con el cifrado afín.
     
+    :param text: Texto cifrado de entrada.
+    :param a: Clave de multiplicación usada en el cifrado.
+    :param b: Clave de desplazamiento usada en el cifrado.
+    :return: Texto descifrado.
+    :raises ValueError: Si no existe inverso multiplicativo para a.
+    """
     a_inv = mod_inverse(a, 26)
-    plaintext = ""
-    for char in ciphertext:
-        if char.islower():
-            # Descifrar letras minúsculas
-            C = ord(char) - ord('a')
-            P = (a_inv * (C - b)) % 26
-            plaintext += chr(P + ord('a'))
-        elif char.isupper():
-            # Descifrar letras mayúsculas
-            C = ord(char) - ord('A')
-            P = (a_inv * (C - b)) % 26
-            plaintext += chr(P + ord('A'))
+    if a_inv is None:
+        raise ValueError("No existe inverso multiplicativo para a.")
+    
+    decrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            y = ord(char.lower()) - ord('a')
+            decrypted_char = (a_inv * (y - b)) % 26
+            decrypted_text += chr(decrypted_char + ord('a'))
         else:
-            # Mantener otros caracteres sin cambios
-            plaintext += char
-    return plaintext
+            decrypted_text += char  # Mantiene espacios y otros caracteres sin cifrar
+    return decrypted_text
 
-
-# Ejemplo de uso
 if __name__ == "__main__":
-    plaintext = "Hola Mundo"
-    justText = clean_string(plaintext)
-    a, b = 5, 8  # Claves del cifrado afín
+    # Ejemplo de uso
+    text: str = "prueba mega texto"
+    text_sin_espacios = clean_string(text)
+    a: int = 5
+    b: int = 8  # Claves (a debe ser coprimo con 26)
 
-    # Cifrar
-    ciphertext = affine_encrypt(justText, a, b)
-    print("Texto cifrado:", ciphertext)
+    encrypted: str = affine_encrypt(text_sin_espacios, a, b)
+    decrypted: str = affine_decrypt(encrypted, a, b)
 
-    # Descifrar
-    decrypted_text = affine_decrypt(ciphertext, a, b)
-    print("Texto descifrado:", decrypted_text)
+    print(f"Texto original: {text_sin_espacios}, con espacios -> {text}")
+    print(f"Texto cifrado: {encrypted}")
+    print(f"Texto descifrado: {decrypted}, con espacios -> {text}")

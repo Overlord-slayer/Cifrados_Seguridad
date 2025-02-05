@@ -70,4 +70,4 @@ def decimal_to_binary(n):
 
 if __name__ == "__main__":
     # Ejemplo
-    print(text_to_bits("Buenas tardes"))
+    print(text_to_bits("Hola papa"))
