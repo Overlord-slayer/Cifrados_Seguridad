@@ -4,6 +4,8 @@ en una oracion/plabara/texto. En este caso, solo se hace conteo y se grafica de 
 como esta distribuida. Servira para la parte B del lab
 Returns:
     _type_: _description_
+
+@see https://chatgpt.com/share/67a2c125-33bc-8001-8b61-455de4cfc96d
 """
 import matplotlib.pyplot as plt
 from clean_string import clean_string
