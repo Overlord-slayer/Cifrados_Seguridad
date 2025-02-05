@@ -40,4 +40,7 @@ En este caso, para poder probar cada uno de los algoritmos, ingresar al archivo 
 
 ## Frecuencia de palabras
 Este se recomiendo revisar el jupyter notebook -> **frecuencia_chars_graph.ipynb**
+![image](https://github.com/user-attachments/assets/1617ebb3-6da2-4872-a3d5-5ae94483bf47)
+![image](https://github.com/user-attachments/assets/40f921f1-deff-4720-a45b-d8a8f1566763)
+
 
