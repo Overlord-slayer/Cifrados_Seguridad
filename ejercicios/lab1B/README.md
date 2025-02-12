@@ -1,6 +1,6 @@
-# Lab 1, Part A
+# Lab 1, Part B
 
-En este caso, se implementaron ciertos algoritmos de cifrado:
+Se utilizaron la implementacion de los cifrados previamente generados en la parte A:
 
 - **Cifrado César**
 - **Cifrado Afín**
@@ -33,6 +33,11 @@ En este caso, para poder probar cada uno de los algoritmos, ingresar al archivo 
 ![image](https://github.com/user-attachments/assets/f8e16998-6ae1-4bd9-a16f-67c5598e7612)
 
 ## Cesar
+Para este caso, se opto por fuerza bruta, pues era lo mas sencillo. La frecuencia fue un poco extraña, ya que quizas no se hizo la mejor implementacion o la misma, no se adecuo para la busqueda.
+Clave '23', resulta en 'nnuestrolaberintodigitalenconstanteevolucionlaagilidadcriptograficacriptoagilidadparaabreviaresunmecanismodedefensacrucialosbrindalacapacidaddemodificarrapidamenteelusodealgoritmosyclavescriptograficosunaaccionnecesariaparaanticiparnosalasfuturasamenazasdeciberseguridad'
+
+
+En este caso, para la r
 ![image](https://github.com/user-attachments/assets/d95f2166-e4c6-402c-af6f-b182b290a5b8)
 
 ## Afin
