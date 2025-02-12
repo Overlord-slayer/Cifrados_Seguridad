@@ -39,5 +39,5 @@ Propiedad del XOR: Si aplicas A XOR B XOR B, el resultado vuelve a ser A. Por lo
 ![image](https://github.com/user-attachments/assets/00c273fa-487a-4105-90d6-f83e5f015847)
 
 ### Referencias
-https://chatgpt.com/share/67a55744-4930-8010-ad74-e6992af5c04d
-https://chatgpt.com/share/67ac1a00-3eb0-8010-93ea-76f1fbc6e22f
+- https://chatgpt.com/share/67a55744-4930-8010-ad74-e6992af5c04d
+- https://chatgpt.com/share/67ac1a00-3eb0-8010-93ea-76f1fbc6e22f
