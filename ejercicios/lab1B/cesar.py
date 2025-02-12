@@ -41,11 +41,11 @@ def main(contenido:str):
     actual_probs, theorical_probs = fc.compare_with_theoretical(probabilities)
     print("Distribucion de probabilidades")
     
-    # for i in range(31):
-    #     texto_descifrado = descifrar_cesar(contenido, i)    
-    #     print(
-    #         f"Clave '{i}', resulta en '{texto_descifrado}'"
-    #         )
+    for i in range(31):
+        texto_descifrado = descifrar_cesar(contenido, i)    
+        print(
+            f"Clave '{i}', resulta en '{texto_descifrado}'"
+            )
 
 def cifrar_cesar(cadena: str, numero_clave: int):
     """
