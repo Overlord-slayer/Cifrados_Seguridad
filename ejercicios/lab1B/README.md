@@ -41,6 +41,11 @@ En este caso, para la r
 ![image](https://github.com/user-attachments/assets/d95f2166-e4c6-402c-af6f-b182b290a5b8)
 
 ## Afin
+En este caso, no se hallo un decifrado como con cesar, pero esta fue la mejor que se obtuvo.
+
+Mejor desencriptación encontrada con a=9, b=14:
+hicisadltidahieiqntattiebnaflajndntatqiauitiikfbaibtidlqafamuiqiabfpdiitujtidibblbbigidluhatipndntatebuenadmuiaibsnfnladlqafaeahfiqdiibdasislbnatisndiqtiqnqfisaqzblpabnhxlbsaenlhgadnlqaaqisabiqaqmuidljbablhbieuaibabqibaantasihfixuiblhdaqmuitislqfbablhebnaflajndntatbiisadaoahtlbaantasihfiquqedagiqebnafljbaxneaqzadjlbnfslqelsablsifntlqalblfblqhuiglqzqijublqqfinhentihfiqnbgielsluhedablicisadltidansalbfahenatidaebnaflajndntatihhuiqfbapafaddaelhfnhuaelhfbadaqasihaoaqtnhasneaqtienpibqijubntat
+
 ![image](https://github.com/user-attachments/assets/0810636e-b015-467d-9b47-12b1b4f9e411)
 
 ## Frecuencia de palabras
