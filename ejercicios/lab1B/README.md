@@ -23,7 +23,8 @@ Para Linux
 source <nombre_entorno>/bin/activate
 ```
 En este caso, se modularizo el codigo para tener independecia en cada codigo, asi mismo, para la parte de frecuencia, se opto por jupyter lab,
-por ello hay un .ipynb. Pero igualmente esta el .py.
+por ello hay un .ipynb. Pero igualmente esta el .py. EN CASO MAS SIMPLE DE VERIFICAR RESULTADOS, VALIDAR LOS .ipynb para previsualizar los resultados.
+Formas mas sencilla. Lo hice asi, porque a veces no funciona colocar imagenes en el README.md desde linux.
 
 # Consideraciones
 En este caso, para poder probar cada uno de los algoritmos, ingresar al archivo especifico, no hay un main.py global que implemente cada uno.
