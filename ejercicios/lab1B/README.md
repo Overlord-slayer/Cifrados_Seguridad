@@ -30,6 +30,17 @@ En este caso, para poder probar cada uno de los algoritmos, ingresar al archivo 
 
 # Ejemplo
 ## Vigenere
+Para este caso, se utilizo algo de mineria de datos, en donde se utilizan bigramas para poder determinar para poder tener una limitacion de busqueda
+y hacerlo mas simple. Los bigramas y trigamas redujeron la busqueda, pues se hallaban similitudes en el texto. Cuanto más alto sea este puntaje, más 
+probable es que el texto tenga sentido en español. En el caso del metodo de brute_force_attack(), este puntaje se usa para ordenar los resultados y 
+encontrar las claves más probables.
+
+1. Clave: payaso
+Puntuación de estructuras comunes en español: 186
+Métrica de similitud: 17.718
+Texto descifrado:
+aunqueelerrorheartbleedsehasolucionadosiemprehayunanuevaamenazaenelhorizontehoylacuanticaesesaamenazaquepuedeatravesartodasnuestrasdefensasantesdequetodoesteperdidodebemosadoptarlacriptoagilidadparadefendernosdisponibleenlasprincipalessolucionesdecriptografiaposcuanticapqcdelaactualidadlaevidenciade...
+
 ![image](https://github.com/user-attachments/assets/f8e16998-6ae1-4bd9-a16f-67c5598e7612)
 
 ## Cesar
