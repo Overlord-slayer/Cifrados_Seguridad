@@ -27,6 +27,11 @@ Este proyecto implementa un cifrado de flujo utilizando la operación XOR y un g
 
 **1. ¿Qué sucede cuando cambias la clave utilizada para generar el keystream?**
    - Si la clave cambia, el keystream generado será diferente, por lo que el mensaje cifrado no podrá ser descifrado correctamente.
+   # Con variabilidad, en este caso, se utiliza el tiempo como semilla
+   ![image](https://github.com/user-attachments/assets/09ae4e3b-5e1e-4589-9785-922a7419639b)
+   # Con semilla fija
+   ![image](https://github.com/user-attachments/assets/a18e9f5a-db02-4e18-8f64-71d3829158cf)
+
 
 **2. ¿Qué riesgos de seguridad existen si reutilizas el mismo keystream para cifrar dos mensajes diferentes?**
    - Si dos mensajes distintos se cifran con el mismo keystream, se puede obtener información sobre ambos mensajes mediante análisis XOR de los textos cifrados.
