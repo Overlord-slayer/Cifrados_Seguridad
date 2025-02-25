@@ -22,6 +22,10 @@ Este proyecto implementa un cifrado de flujo utilizando la operación XOR y un g
    ```bash
    python -m unittest xor_cipher_prng.py
    ```
+4. Para ejecutar las preubas unitarias en modo detallado
+   ```bash
+      python3 -m unittest -v test_xor_prng.py
+   ```
 
 ## Preguntas y Respuestas
 
@@ -42,3 +46,4 @@ Este proyecto implementa un cifrado de flujo utilizando la operación XOR y un g
 **4. ¿Qué consideraciones debes tener al generar un keystream en un entorno real?**
    - Se debe usar un generador criptográficamente seguro como ChaCha20 o AES-CTR en lugar de un PRNG simple para evitar vulnerabilidades.
 
+![image](https://github.com/user-attachments/assets/5468b2b4-a5cc-40ff-b3de-0325afa10749)
