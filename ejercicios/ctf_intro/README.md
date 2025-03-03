@@ -31,8 +31,23 @@ mensaje cifrado: IODJ{FHVDU_FLIUDGR}
 ![image](https://github.com/user-attachments/assets/67521288-8859-4c1a-a1a3-20fcaff624a9)
 
 ```
+https://www.dcode.fr/cifrado-cesar
 mensaje decifrado: FLAG{CESAR_CIFRADO}
 mensaje rot13: FLAG{SECRET_FLAG_ROOT13}
 ```
 
 # CHELLENGE 4
+![image](https://github.com/user-attachments/assets/efb6ebaa-b099-4af8-a871-2cd5823aa4da)
+![image](https://github.com/user-attachments/assets/63639d72-36f2-4261-977b-08c784b0f228)
+![image](https://github.com/user-attachments/assets/08010efa-2d8e-4f31-bb9c-d24fec91b7ad)
+![image](https://github.com/user-attachments/assets/dae66292-4790-4684-8901-bb1d5f849e6b)
+
+
+```
+https://www.contadorpalabras.com/
+https://www.dcode.fr/identificador-cifrado
+https://www.dcode.fr/rot-cipher
+mensaje cifrado: SV OHU JVUZLNBPKV, OHU LUJVUAYHKV BUH MSHN WHYH LS ZPNBPLUAL KLZHMPV MSHN{JYFWAV_HUHSFZPZ}
+mensaje decifrado: LO HAN CONSEGUIDO, HAN ENCONTRADO UNA FLAG PARA EL SIGUIENTE DESAFIO FLAG{CRYPTO_ANALYSIS}
+```
+
