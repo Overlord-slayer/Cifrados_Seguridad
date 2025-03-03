@@ -6,10 +6,14 @@
 ![image](https://github.com/user-attachments/assets/fbddaf5a-7ea0-4f5c-ae68-ae62c9565ad0)
 ![image](https://github.com/user-attachments/assets/41c6325a-c56a-4fc0-a6fb-b06c4c75e256)
 ![image](https://github.com/user-attachments/assets/ab8a7a9d-e401-4979-b030-e5c136d4fc70)
+![image](https://github.com/user-attachments/assets/796e05fc-d6d7-4d38-9a35-0dc7db6227f3)
+![image](https://github.com/user-attachments/assets/1a6fb0ff-1275-41ca-812e-06cf8e7552e7)
 
 ```
 Contaraseña: LinuxForHackers
 ```
+![image](https://github.com/user-attachments/assets/4f639da6-691c-4b69-baab-6a67dab0d435)
+
 ```
 ¡Felicidades! Encontraste la bandera: FLAG{LINUX_BASICS}
 ```
