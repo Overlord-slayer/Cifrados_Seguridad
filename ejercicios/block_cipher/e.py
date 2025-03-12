@@ -172,3 +172,4 @@ if __name__ == "__main__":
     key_img, iv_img = aes_encrypt_image("pic.png", "pic_encrypted.png", AES.MODE_CBC)
     aes_decrypt_image("pic_encrypted.png", "pic_decrypted.png", key_img, iv_img, AES.MODE_CBC)
     print("Imagen cifrada y descifrada correctamente.")
+    
