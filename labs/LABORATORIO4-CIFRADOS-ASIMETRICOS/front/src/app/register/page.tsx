@@ -1,70 +1,52 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/services/api";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const router = useRouter();
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault();
     try {
-      await api.post("/register", { email, name, password });
-      alert("Registro exitoso. Inicia sesión.");
-      router.push("/");
+      const res = await api.post<{ token: string }>("/register", { email, password, name });
+
+      localStorage.setItem("token", res.data.token);
+      router.push("/home");
     } catch (err) {
-      alert("Error al registrar. Intenta de nuevo.");
+      alert("Error al registrar");
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <form onSubmit={handleRegister} className="space-y-4 w-80">
-        <h2 className="text-2xl font-bold text-center">Registro</h2>
-
+      <form onSubmit={handleRegister} className="space-y-4">
         <input
           type="text"
           placeholder="Nombre"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded w-full"
-          required
+          className="border p-2 rounded"
         />
-
         <input
           type="email"
           placeholder="Correo"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded w-full"
-          required
+          className="border p-2 rounded"
         />
-
         <input
           type="password"
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 rounded w-full"
-          required
+          className="border p-2 rounded"
         />
-
-        <button
-          type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded w-full"
-        >
-          Registrarse
-        </button>
-        <button
-          type="button"
-          onClick={() => router.push("/")}
-          className="text-blue-500 underline w-full text-center"
-        >
-          Ya tengo cuenta
+        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+          Registrar
         </button>
       </form>
     </div>
