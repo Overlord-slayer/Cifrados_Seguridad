@@ -1,102 +1,176 @@
- 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { uploadFile } from '@/services/api';
+import { useEffect, useState } from "react";
+import { uploadFile, getFiles, downloadFile, verifyFile } from "@/services/api";
 
 export default function FileUploader() {
   const [file, setFile] = useState<File | null>(null);
-  const [privateKey, setPrivateKey] = useState<CryptoKey | null>(null);
-  const [status, setStatus] = useState('');
+  const [sign, setSign] = useState<boolean>(false);
+  const [privateKey, setPrivateKey] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState<any[]>([]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = e.target.files?.[0] || null;
-    setFile(selected);
+  useEffect(() => {
+    fetchFiles();
+  }, []);
+
+  const fetchFiles = async () => {
+    try {
+      const result = await getFiles();
+      setFiles(result);
+    } catch (error) {
+      console.error("Error al obtener archivos:", error);
+    }
   };
 
-  const handlePrivateKeyImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const content = await file.text();
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (selected) setFile(selected);
+  };
 
-    const binary = atob(content
-      .replace(/-----.*-----/g, '')
-      .replace(/\s/g, '')
-    );
-
-    const binaryArray = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) {
-      binaryArray[i] = binary.charCodeAt(i);
-    }
-
-    try {
-      const key = await crypto.subtle.importKey(
-        'pkcs8',
-        binaryArray.buffer,
-        {
-          name: 'RSASSA-PKCS1-v1_5',
-          hash: 'SHA-256',
-        },
-        false,
-        ['sign']
-      );
-      setPrivateKey(key);
-      setStatus('Clave privada cargada correctamente.');
-    } catch {
-      setStatus('Error al importar la clave privada.');
+  const handlePrivateKeyUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setPrivateKey(reader.result);
+      }
+    };
+    if (e.target.files?.[0]) {
+      reader.readAsText(e.target.files[0]);
     }
   };
 
   const handleUpload = async () => {
-    if (!file || !privateKey) {
-      setStatus('Por favor selecciona un archivo y carga tu clave privada.');
-      return;
+    if (!file) return alert("Selecciona un archivo");
+    setLoading(true);
+
+    let signature: string | undefined = undefined;
+
+    if (sign && privateKey) {
+      const arrayBuffer = await file.arrayBuffer();
+      const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+
+      try {
+        const importedKey = await crypto.subtle.importKey(
+          "pkcs8",
+          strToArrayBuffer(privateKey),
+          {
+            name: "RSASSA-PKCS1-v1_5",
+            hash: "SHA-256",
+          },
+          false,
+          ["sign"]
+        );
+
+        const signatureBuffer = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", importedKey, hashBuffer);
+        signature = btoa(String.fromCharCode(...new Uint8Array(signatureBuffer)));
+      } catch (err) {
+        console.error("Error al firmar:", err);
+        alert("Error al firmar el archivo");
+        setLoading(false);
+        return;
+      }
     }
 
-    const buffer = await file.arrayBuffer();
-
-    // 🔐 Hashear archivo
-    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-    const hash = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
-
-    // 📝 Firmar hash
-    const signatureBuffer = await crypto.subtle.sign(
-      { name: 'RSASSA-PKCS1-v1_5' },
-      privateKey,
-      hashBuffer
-    );
-    const signature = btoa(String.fromCharCode(...new Uint8Array(signatureBuffer)));
-
-    // 📤 Subir archivo
     try {
-      const res = await uploadFile(file, signature);
-      setStatus('Archivo subido exitosamente.');
-      console.log(res);
+      await uploadFile(file, signature);
+      alert("Archivo subido correctamente");
+      setFile(null);
+      fetchFiles();
     } catch (err) {
       console.error(err);
-      setStatus('Error al subir archivo.');
+      alert("Error al subir archivo");
+    } finally {
+      setLoading(false);
     }
   };
 
-  return (
-    <div className="flex flex-col items-start space-y-4">
-      <h2 className="text-xl font-semibold">Subir archivo firmado</h2>
+  const handleDownload = async (id: string) => {
+    try {
+      const blob = await downloadFile(id);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "archivo_descargado";
+      link.click();
+    } catch (err) {
+      console.error("Error al descargar archivo:", err);
+      alert("Error al descargar archivo");
+    }
+  };
 
+  const handleVerify = async (id: string, publicKey: string) => {
+    try {
+      const result = await verifyFile(id, publicKey);
+      alert(result.valid ? "Firma válida ✅" : "Firma inválida ❌");
+    } catch (err) {
+      console.error("Error al verificar:", err);
+      alert("Error al verificar la firma");
+    }
+  };
+
+  const strToArrayBuffer = (pem: string): ArrayBuffer => {
+    const b64 = pem.replace(/-----(BEGIN|END) PRIVATE KEY-----|\n/g, "");
+    const binary = atob(b64);
+    const buffer = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) buffer[i] = binary.charCodeAt(i);
+    return buffer.buffer;
+  };
+
+  return (
+    <div className="flex flex-col gap-6 w-full max-w-md border p-4 rounded">
+      <h2 className="text-xl font-bold">Subir archivo</h2>
       <input type="file" onChange={handleFileChange} />
 
-      <label className="text-sm text-gray-600">
-        Cargar clave privada (.pem)
+      <label className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={sign}
+          onChange={(e) => setSign(e.target.checked)}
+        />
+        Firmar con clave privada
       </label>
-      <input type="file" accept=".pem" onChange={handlePrivateKeyImport} />
+
+      {sign && (
+        <input type="file" accept=".pem" onChange={handlePrivateKeyUpload} />
+      )}
 
       <button
+        className="bg-blue-600 text-white p-2 rounded disabled:opacity-50"
+        disabled={loading}
         onClick={handleUpload}
-        className="bg-green-600 text-white px-4 py-2 rounded"
       >
-        Firmar y subir archivo
+        {loading ? "Subiendo..." : "Subir"}
       </button>
 
-      <p className="text-sm text-blue-600">{status}</p>
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-2">Archivos disponibles</h3>
+        {files.length === 0 ? (
+          <p className="text-sm text-gray-500">No hay archivos disponibles.</p>
+        ) : (
+          <ul className="space-y-2">
+            {files.map((file) => (
+              <li key={file.id} className="flex justify-between items-center border p-2 rounded">
+                <span>{file.nombre}</span>
+                <div className="flex gap-2">
+                  <button
+                    className="bg-green-600 text-white px-2 py-1 rounded"
+                    onClick={() => handleDownload(file.id)}
+                  >
+                    Descargar
+                  </button>
+                  <button
+                    className="bg-yellow-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleVerify(file.id, file.publicKey)}
+                  >
+                    Verificar
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
