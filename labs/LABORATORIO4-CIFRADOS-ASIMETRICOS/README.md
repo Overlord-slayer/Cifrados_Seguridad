@@ -11,7 +11,7 @@ Este proyecto permite a los usuarios autenticarse, subir archivos, firmarlos dig
 
 ---
 
-##  Tecnologías Utilizadas
+##  Tecnologías Utilizadass
 
 ### Frontend (Next.js)
 - Autenticación con JWT
