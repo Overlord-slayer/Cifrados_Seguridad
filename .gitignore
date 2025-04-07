@@ -1,14 +1,43 @@
-# Omitir env del lab1
-ejercicios/lab1/env
-ejercicios/e1/env
-ejercicios/lab1/__pycache__
-ejercicios/lab2/env
-ejercicios/lab2/__pycache__
-ejercicios/*.zip
-ejercicios/lab1B/*.zip
-env
-ejercicios/lab2B/*.zip
-ejercicios/lab1B/.ipynb_checkpoints/
-ejercicios/lab1B/__pycache__/
+# 🧠 Node.js (NestJS, Next.js, general)
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
 
-ejercicios/eStreamCipher/__pycache__/
+# ⚙️ Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ⚠️ Archivos temporales
+*.log
+*.tmp
+*.temp
+
+# 🧹 Compilación y configuración
+.next/
+out/
+coverage/
+.cache/
+
+# 💻 IDEs
+.vscode/
+.idea/
+
+# 📦 Archivos grandes
+*.zip
+*.tar
+*.tar.gz
+*.bak
+
+# 🧪 Tests
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# 🚫 Sistema operativo
+.DS_Store
+Thumbs.db
