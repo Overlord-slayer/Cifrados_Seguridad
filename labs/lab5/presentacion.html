@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulación BB84 Interactiva</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    /* Animations */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.1); }
+    }
+    h1 {
+      margin-bottom: 10px;
+      color: #1a2a6c;
+      text-shadow: 1px 1px rgba(26,42,108,0.2);
+      animation: slideDown 0.8s ease-out;
+    }
+    p { max-width: 800px; text-align: center; }
+    .controls {
+      margin: 15px 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    input[type=number] {
+      width: 60px;
+      padding: 7px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    input[type=number]:focus {
+      border-color: #1a2a6c;
+      outline: none;
+    }
+    button {
+      background: #1a2a6c;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover:not(:disabled) {
+      background: #162155;
+    }
+    button:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+    #clave, #mensaje {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #1a2a6c;
+    }
+    .pulse {
+      animation: pulse 1s ease-in-out infinite;
+    }
+    table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+    th {
+      background: #e0e7ff;
+      color: #1a2a6c;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    tr:nth-child(even) td {
+      background: #f9fafb;
+    }
+    tr:hover td {
+      background: #eef2ff;
+    }
+    .match-yes {
+      background: #d1fae5 !important;
+      color: #065f46;
+      font-weight: 500;
+    }
+    .match-no  {
+      background: #fee2e2 !important;
+      color: #991b1b;
+      font-weight: 500;
+    }
+    .use-bit {
+      color: #047857;
+      font-weight: bold;
+    }
+    .no-use {
+      color: #b91c1c;
+      font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      th, td { font-size: 12px; padding: 8px; }
+      button { font-size: 14px; padding: 8px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulación BB84 Interactiva</h1>
+  <p>Define la longitud deseada de la clave secreta y haz clic en <strong>"Nueva ronda"</strong> hasta completarla.</p>
+  <div class="controls">
+    <label for="targetLength">Longitud clave:</label>
+    <input type="number" id="targetLength" min="1" value="8" />
+    <button id="nuevaRondaBtn">Nueva ronda</button>
+    <button id="resetBtn">Reiniciar</button>
+  </div>
+  <p id="clave">Clave secreta: </p>
+  <p id="mensaje"></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Ronda</th><th>Bit Alice</th><th>Base A.</th><th>Base B.</th><th>Coinci.</th><th>Usar</th>
+      </tr>
+    </thead>
+    <tbody id="tablaCuerpo"></tbody>
+  </table>
+  <script>
+    const nuevaRondaBtn = document.getElementById('nuevaRondaBtn');
+    const resetBtn      = document.getElementById('resetBtn');
+    const targetInput   = document.getElementById('targetLength');
+    const claveP        = document.getElementById('clave');
+    const mensajeP      = document.getElementById('mensaje');
+    const tablaCuerpo   = document.getElementById('tablaCuerpo');
+    let ronda = 0, clave = '';
+
+    const randomBit  = () => Math.random() < 0.5 ? 0 : 1;
+    const randomBase = () => Math.random() < 0.5 ? '|' : '/';
+
+    nuevaRondaBtn.addEventListener('click', () => {
+      const target = parseInt(targetInput.value) || 0;
+      if (clave.length >= target) return;
+      ronda++;
+      const bitAlice  = randomBit();
+      const baseAlice= randomBase();
+      const baseBob  = randomBase();
+      const coincide = baseAlice === baseBob;
+      if (coincide) clave += bitAlice;
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${ronda}</td>
+        <td>${bitAlice}</td>
+        <td>${baseAlice}</td>
+        <td>${baseBob}</td>
+        <td class="${coincide? 'match-yes':'match-no'}">${coincide? '✔':'✘'}</td>
+        <td class="${coincide? 'use-bit':'no-use'}">${coincide? '✅':'❌'}</td>
+      `;
+      row.style.animation = 'fadeIn 0.5s ease-out';
+      tablaCuerpo.appendChild(row);
+      claveP.textContent = `Clave secreta: ${clave}`;
+
+      if (clave.length >= target) {
+        nuevaRondaBtn.disabled = true;
+        mensajeP.textContent = `🔒 Clave final (${clave.length} bits) generada`;
+        mensajeP.classList.add('pulse');
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      ronda = 0;
+      clave = '';
+      tablaCuerpo.innerHTML = '';
+      claveP.textContent = 'Clave secreta: ';
+      mensajeP.textContent = '';
+      mensajeP.classList.remove('pulse');
+      nuevaRondaBtn.disabled = false;
+    });
+  </script>
+</body>
+</html>
